@@ -2,6 +2,9 @@
 
 ## Learning Algorithm
 
+The code uses Deep Q-Learning Algorithm for training the model. The implemenation is wrapped within the Agent class (i.e., `agent.py`)
+
+
 ### Model architecture
 
 Model architecture has been chosen based on the mean per 100 sequential episode scores.
