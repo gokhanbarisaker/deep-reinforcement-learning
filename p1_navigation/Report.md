@@ -36,7 +36,7 @@ Saved model consist of sequentially connected 4 dense/linear layers.
 
 ### Agent
 
-Project uses the following hyperparameters during training
+Agent utilizes 2 models for the DQN network. i.e., local (w), target (w-). Project uses the following hyperparameters during training
 
 - LEARNING_RATE = 5e-4
 - GAMMA = 0.99
@@ -45,6 +45,22 @@ Project uses the following hyperparameters during training
 - BUFFER_SIZE = int(1e5)
 - BATCH_SIZE = 64
 - UPDATE_EVERY = 4
+
+
+#### Act
+
+Agent acts with an e-greedy algorithm. It either acts randomly or using the local model with frozen weights (no grad.).
+
+The agent records each experience (i.e., `<S, A, R, S'>`) to the replay buffer with each step. With every `UPDATE_EVERY` steps, the agent tries to learn from experiences stored in the replay buffer.
+
+
+#### Learn
+
+The replay buffer randomly samples a given `BATCH_SIZE` experiences (i.e., `<S, A, R, S'>`) for learning after each `UPDATE_EVERY` itearation.
+
+The agent makes prediction for each given experience with both local and target models. Then, the gradients are applied to the local model with MSE loss between both predictions.
+
+Finally, the target model parameters are updates based on the `TAU` variable.
 
 
 ## Plot of Rewards
